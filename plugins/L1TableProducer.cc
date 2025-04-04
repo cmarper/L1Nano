@@ -44,8 +44,15 @@ typedef SimpleFlatTableProducer<l1t::HPSPFTau> SimpleTriggerL1HPSPFTauFlatTableP
 #include "DataFormats/L1DTTrackFinder/interface/L1Phase2MuDTPhContainer.h"
 #include "DataFormats/L1DTTrackFinder/interface/L1Phase2MuDTThDigi.h"
 #include "DataFormats/L1DTTrackFinder/interface/L1Phase2MuDTThContainer.h"
+#include "DataFormats/L1DTTrackFinder/interface/L1Phase2MuDTExtPhDigi.h"
+#include "DataFormats/L1DTTrackFinder/interface/L1Phase2MuDTExtPhContainer.h"
+#include "DataFormats/L1DTTrackFinder/interface/L1Phase2MuDTExtThDigi.h"
+#include "DataFormats/L1DTTrackFinder/interface/L1Phase2MuDTExtThContainer.h"
+
 typedef SimpleFlatTableProducer<L1Phase2MuDTPhDigi> SimpleTriggerL1Phase2MuDTPhDigiTableProducer;
 typedef SimpleFlatTableProducer<L1Phase2MuDTThDigi> SimpleTriggerL1Phase2MuDTThDigiTableProducer;
+typedef SimpleFlatTableProducer<L1Phase2MuDTExtPhDigi> SimpleTriggerL1Phase2MuDTExtPhDigiTableProducer;
+typedef SimpleFlatTableProducer<L1Phase2MuDTExtThDigi> SimpleTriggerL1Phase2MuDTExtThDigiTableProducer;
 
 #include "FWCore/Framework/interface/MakerMacros.h"
 DEFINE_FWK_MODULE(SimpleL1VtxWordCandidateFlatTableProducer);
@@ -63,3 +70,5 @@ DEFINE_FWK_MODULE(SimpleTriggerL1PFTauFlatTableProducer);
 DEFINE_FWK_MODULE(SimpleTriggerL1HPSPFTauFlatTableProducer);
 DEFINE_FWK_MODULE(SimpleTriggerL1Phase2MuDTPhDigiTableProducer);
 DEFINE_FWK_MODULE(SimpleTriggerL1Phase2MuDTThDigiTableProducer);
+DEFINE_FWK_MODULE(SimpleTriggerL1Phase2MuDTExtPhDigiTableProducer);
+DEFINE_FWK_MODULE(SimpleTriggerL1Phase2MuDTExtThDigiTableProducer);

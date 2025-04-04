@@ -22,7 +22,9 @@ p2L1MuonTablesTask = cms.Task(
     # DT tests
     convertDTDigis,
     dtPhiTable,
-    dtThetaTable
+    dtThetaTable,
+    dtExtPhiTable,
+    dtExtThetaTable,
 
 )
 

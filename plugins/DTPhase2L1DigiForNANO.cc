@@ -35,6 +35,11 @@ Implementation:
 #include "DataFormats/L1DTTrackFinder/interface/L1Phase2MuDTThContainer.h"
 #include "DataFormats/L1DTTrackFinder/interface/L1Phase2MuDTPhContainer.h"
 
+#include "DataFormats/L1DTTrackFinder/interface/L1Phase2MuDTExtPhDigi.h"
+#include "DataFormats/L1DTTrackFinder/interface/L1Phase2MuDTExtThDigi.h"
+#include "DataFormats/L1DTTrackFinder/interface/L1Phase2MuDTExtThContainer.h"
+#include "DataFormats/L1DTTrackFinder/interface/L1Phase2MuDTExtPhContainer.h"
+
 #include "L1Trigger/DTTriggerPhase2/interface/constants.h"
 
 namespace edm {
@@ -59,6 +64,8 @@ class DTPhase2L1DigiForNANO : public edm::stream::EDProducer<> {
 		// ----------member data ---------------------------
 		edm::EDGetTokenT<L1Phase2MuDTPhContainer> dtPhiToken_;
 		edm::EDGetTokenT<L1Phase2MuDTThContainer> dtThetaToken_;
+		edm::EDGetTokenT<L1Phase2MuDTExtPhContainer> dtExtPhiToken_;
+		edm::EDGetTokenT<L1Phase2MuDTExtThContainer> dtExtThetaToken_;
 
 };
 
@@ -69,9 +76,13 @@ DTPhase2L1DigiForNANO::DTPhase2L1DigiForNANO(const edm::ParameterSet& iConfig) {
 	//register your products
 	dtPhiToken_   = consumes<L1Phase2MuDTPhContainer>(iConfig.getParameter<edm::InputTag>("muDTPhiDigiToken"));
 	dtThetaToken_ = consumes<L1Phase2MuDTThContainer>(iConfig.getParameter<edm::InputTag>("muDTThetaDigiToken"));
+	dtExtPhiToken_   = consumes<L1Phase2MuDTExtPhContainer>(iConfig.getParameter<edm::InputTag>("muDTExtPhiDigiToken"));
+	dtExtThetaToken_ = consumes<L1Phase2MuDTExtThContainer>(iConfig.getParameter<edm::InputTag>("muDTExtThetaDigiToken"));
 
 	produces< std::vector<L1Phase2MuDTPhDigi> >("muL1P2DTDigiPhis");
 	produces< std::vector<L1Phase2MuDTThDigi> >("muL1P2DTDigiThetas");
+	produces< std::vector<L1Phase2MuDTExtPhDigi> >("muL1P2DTExtDigiPhis");
+        produces< std::vector<L1Phase2MuDTExtThDigi> >("muL1P2DTExtDigiThetas");
 
 	//now do what ever other initialization is needed
 }
@@ -95,9 +106,17 @@ void DTPhase2L1DigiForNANO::produce(edm::Event& iEvent, const edm::EventSetup& i
 	edm::Handle<L1Phase2MuDTThContainer> muDTThetas;
 	iEvent.getByToken(dtThetaToken_, muDTThetas);
 
+	edm::Handle<L1Phase2MuDTExtPhContainer> muDTExtPhis;
+        iEvent.getByToken(dtExtPhiToken_, muDTExtPhis);
+
+        edm::Handle<L1Phase2MuDTExtThContainer> muDTExtThetas;
+        iEvent.getByToken(dtExtThetaToken_, muDTExtThetas);
+
         // Output format of Primitives, so that NANOAOD reads them easily
 	std::vector<L1Phase2MuDTPhDigi> dtPhis;
 	std::vector<L1Phase2MuDTThDigi> dtThetas;
+	std::vector<L1Phase2MuDTExtPhDigi> dtExtPhis;
+        std::vector<L1Phase2MuDTExtThDigi> dtExtThetas;
 
 
         // Copy...
@@ -115,6 +134,20 @@ void DTPhase2L1DigiForNANO::produce(edm::Event& iEvent, const edm::EventSetup& i
 			dtThetas.push_back(trig);
 		}
 	}
+	if (muDTExtPhis.isValid()){
+
+                const auto trigs = muDTExtPhis->getContainer();
+                for(const auto & trig : (*trigs)) {
+                        dtExtPhis.push_back(trig);
+                }
+        }
+        if (muDTExtThetas.isValid()){
+
+                const auto trigs = muDTExtThetas->getContainer();
+                for(const auto & trig : (*trigs)) {
+                        dtExtThetas.push_back(trig);
+                }
+        }
 
         // Put in the event 
 	std::unique_ptr<std::vector<L1Phase2MuDTPhDigi> > outPhi_ptr = std::make_unique<std::vector<L1Phase2MuDTPhDigi> >(dtPhis);
@@ -123,6 +156,11 @@ void DTPhase2L1DigiForNANO::produce(edm::Event& iEvent, const edm::EventSetup& i
 	std::unique_ptr<std::vector<L1Phase2MuDTThDigi> > outTheta_ptr = std::make_unique<std::vector<L1Phase2MuDTThDigi> >(dtThetas);
 	iEvent.put(std::move(outTheta_ptr), "muL1P2DTDigiThetas");
 
+	std::unique_ptr<std::vector<L1Phase2MuDTExtPhDigi> > outExtPhi_ptr = std::make_unique<std::vector<L1Phase2MuDTExtPhDigi> >(dtExtPhis);
+        iEvent.put(std::move(outExtPhi_ptr), "muL1P2DTExtDigiPhis");
+
+        std::unique_ptr<std::vector<L1Phase2MuDTExtThDigi> > outExtTheta_ptr = std::make_unique<std::vector<L1Phase2MuDTExtThDigi> >(dtExtThetas);
+        iEvent.put(std::move(outExtTheta_ptr), "muL1P2DTExtDigiThetas");
 
 }
 
