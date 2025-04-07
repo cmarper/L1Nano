@@ -579,10 +579,34 @@ dtPhiTable = cms.EDProducer(
            chi2     = Var ("chi2",int,doc="chi2"),
            rpcFlag     = Var ("rpcFlag",int,doc="rpcFlag"),
 
-#           phiCMSSW     = Var ("phiCMSSW",int,doc="phiCMSSW"), # only in extended
-#           phiBendCMSSW = Var ("phiBendCMSSW",int,doc="phiBendCMSSW"),
-#           xLocal     = Var ("xLocal",int,doc="xLocal"), # only in extended
-#           tanPsi     = Var ("tanPsi",int,doc="tanPsi"), # only in extended
+     )
+)
+
+dtExtPhiTable = cms.EDProducer(
+    "SimpleTriggerL1Phase2MuDTExtPhDigiTableProducer",
+     src= cms.InputTag("convertDTDigis","muL1P2DTExtDigiPhis"),
+     cut = cms.string(""),
+     name = cms.string("L1Phase2MuDTPhDigiExt"),
+     doc = cms.string ("DT Phase2 Digi, Extended Phi"),
+     singleton = cms.bool(False), # the number of entries is variable
+     variables = cms.PSet(
+           bxNum   = Var ("bxNum",int,doc="BX number"),
+           whNum   = Var ("whNum",int,doc="Wheel"),
+           scNum   = Var ("scNum",int,doc="Sector"),
+           stNum   = Var ("stNum",int,doc="Station"),
+           slNum   = Var ("slNum",int,doc="Superlayer"),
+           phi     = Var ("phi",int,doc="phi"),
+           phiBend = Var ("phiBend",int,doc="phiBend"),
+           quality = Var ("quality",int,doc="quality"),
+           index   = Var ("index",int,doc="index"),
+           t0      = Var ("t0",int,doc="t0"),
+           chi2    = Var ("chi2",int,doc="chi2"),
+           rpcFlag = Var ("rpcFlag",int,doc="rpcFlag"),
+           
+           phiCMSSW     = Var ("phiCMSSW",int,doc="phiCMSSW"), # only in extended
+           phiBendCMSSW = Var ("phiBendCMSSW",int,doc="phiBendCMSSW"), # only in extended
+           xLocal     = Var ("xLocal",int,doc="xLocal"), # only in extended
+           tanPsi     = Var ("tanPsi",int,doc="tanPsi"), # only in extended
 
      )
 )
@@ -609,55 +633,26 @@ dtThetaTable = cms.EDProducer(
      )
 )
 
-dtExtPhiTable = cms.EDProducer(
-    "SimpleTriggerL1Phase2MuDTExtPhDigiTableProducer",
-     src= cms.InputTag("convertDTDigis","muL1P2DTExtDigiPhis"),
-     cut = cms.string(""),
-     name = cms.string("L1Phase2MuDTExtPhDigi"),
-     doc = cms.string ("DT Phase2 Digi, Extended Phi"),
-     singleton = cms.bool(False), # the number of entries is variable
-     variables = cms.PSet(
-     #      bxNum   = Var ("bxNum",int,doc="BX number"),
-     #      whNum   = Var ("whNum",int,doc="Wheel"),
-     #      scNum   = Var ("scNum",int,doc="Sector"),
-     #      stNum   = Var ("stNum",int,doc="Station"),
-     #      slNum   = Var ("slNum",int,doc="Superlayer"),
-     #      phi     = Var ("phi",int,doc="phi"),
-     #      phiBend = Var ("phiBend",int,doc="phiBend"),
-     #      quality = Var ("quality",int,doc="quality"),
-     #      index   = Var ("index",int,doc="index"),
-     #      t0      = Var ("t0",int,doc="t0"),
-     #      chi2    = Var ("chi2",int,doc="chi2"),
-     #      rpcFlag = Var ("rpcFlag",int,doc="rpcFlag"),
-           
-           phiCMSSW     = Var ("phiCMSSW",int,doc="phiCMSSW"), # only in extended
-           phiBendCMSSW = Var ("phiBendCMSSW",int,doc="phiBendCMSSW"), # only in extended
-           xLocal     = Var ("xLocal",int,doc="xLocal"), # only in extended
-           tanPsi     = Var ("tanPsi",int,doc="tanPsi"), # only in extended
-
-     )
-)
-
 dtExtThetaTable = cms.EDProducer(
     "SimpleTriggerL1Phase2MuDTExtThDigiTableProducer",
      src= cms.InputTag("convertDTDigis","muL1P2DTExtDigiThetas"),
      cut = cms.string(""),
-     name = cms.string("L1Phase2MuDTExtThDigi"),
+     name = cms.string("L1Phase2MuDTThDigiExt"),
      doc = cms.string ("DT Phase2 Digi, Extended Theta"),
      singleton = cms.bool(False), # the number of entries is variable
      variables = cms.PSet(
-     #      bxNum   = Var ("bxNum",int,doc="BX number"),
-     #      whNum   = Var ("whNum",int,doc="Wheel"),
-     #      scNum   = Var ("scNum",int,doc="Sector"),
-     #      stNum   = Var ("stNum",int,doc="Station"),
-     #      z       = Var ("z",int,doc="z"),
-     #      k       = Var ("k",int,doc="k"),
-     #      quality = Var ("quality",int,doc="quality"),
-     #      index   = Var ("index",int,doc="index"),
-     #      t0      = Var ("t0",int,doc="t0"),
-     #      chi2    = Var ("chi2",int,doc="chi2"),
-     #      rpcFlag = Var ("rpcFlag",int,doc="rpcFlag"),
-
+           bxNum   = Var ("bxNum",int,doc="BX number"),
+           whNum   = Var ("whNum",int,doc="Wheel"),
+           scNum   = Var ("scNum",int,doc="Sector"),
+           stNum   = Var ("stNum",int,doc="Station"),
+           z       = Var ("z",int,doc="z"),
+           k       = Var ("k",int,doc="k"),
+           quality = Var ("quality",int,doc="quality"),
+           index   = Var ("index",int,doc="index"),
+           t0      = Var ("t0",int,doc="t0"),
+           chi2    = Var ("chi2",int,doc="chi2"),
+           rpcFlag = Var ("rpcFlag",int,doc="rpcFlag"),
+           
            zCMSSW  = Var ("zCMSSW",int,doc="zCMSSW"), # only in extended
            kCMSSW  = Var ("kCMSSW",int,doc="kCMSSW"), # only in extended
            yLocal  = Var ("yLocal",int,doc="yLocal"), # only in extended
